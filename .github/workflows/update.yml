@@ -49,6 +49,30 @@ jobs:
             exit 1
           fi
           echo "LZC_API_TOKEN is configured."
+      - name: Verify LazyCat application permission
+        shell: bash
+        env:
+          LZC_API_HOST: ${{ secrets.LZC_API_HOST }}
+          LZC_API_TOKEN: ${{ secrets.LZC_API_TOKEN }}
+        run: |
+          api_host="${LZC_API_HOST:-https://appstore.api.lazycat.cloud}"
+          response_file="${RUNNER_TEMP}/memos-review-access.json"
+          curl --fail --silent --show-error \
+            --header "X-API-Token: ${LZC_API_TOKEN}" \
+            --output "${response_file}" \
+            "${api_host%/}/sdk/v3/developer/app/cloud.lazycat.app.memos/review/list?page=0&size=1"
+          python3 - "${response_file}" <<'PY'
+          import json
+          import sys
+
+          with open(sys.argv[1], encoding="utf-8") as response:
+              result = json.load(response)
+          if result.get("errorCode") != 0:
+              message = result.get("msg") or "unknown developer-platform error"
+              print(f"::error title=No Memos application permission::{message}")
+              raise SystemExit(1)
+          print("Developer PAT and cloud.lazycat.app.memos collaborator permission are valid.")
+          PY
 
   upgrade-test:
     name: Verify persistent data upgrade

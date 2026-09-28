@@ -16,7 +16,7 @@ Memos 启动时自动迁移数据库，迁移后的数据库不支持直接交�
 
 ## GitHub 设置
 
-在本仓库的 Actions secrets 中设置 `LZC_API_TOKEN`。开发者账号还必须是应用 `cloud.lazycat.app.memos` 的协作者。可选设置 `LZC_API_HOST`；未设置时使用生产应用商店地址。
+在本仓库的 Actions secrets 中设置 `LZC_API_TOKEN`。开发者账号还必须是应用 `cloud.lazycat.app.memos` 的协作者。可选设置 `LZC_API_HOST`；未设置时使用生产应用商店地址。工作流首先执行只读预检，验证 Actions 回写权限、PAT 有效性和该应用的协作者权限，然后才会运行升级测试和后续流水线。
 
 仓库 Actions 权限需要允许写入 Contents。正式流程会提交更新后的 `package.yml`、`lzc-manifest.yml` 和 `.lazycat-action.lock.yml`，以便下次从已提交版本继续比较。
 
