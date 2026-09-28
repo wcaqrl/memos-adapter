@@ -1,0 +1,17 @@
+package: cloud.lazycat.app.memos
+version: 0.26.2
+name: memos
+description: Memos 是基于云的笔记服务的轻量级、自托管替代方案。它在构建时充分考虑了隐私和性能，为个人知识管理提供了一个全面的平台，而不会影响数据所有权或安全性。
+homepage: https://usememos.com
+author: usememos
+license: MIT
+locales:
+  zh:
+    name: memos
+    description: Memos 是基于云的笔记服务的轻量级、自托管替代方案。它在构建时充分考虑了隐私和性能，为个人知识管理提供了一个全面的平台，而不会影响数据所有权或安全性。
+  zh_CN:
+    name: memos
+    description: Memos 是基于云的笔记服务的轻量级、自托管替代方案。它在构建时充分考虑了隐私和性能，为个人知识管理提供了一个全面的平台，而不会影响数据所有权或安全性。
+  en:
+    name: memos
+    description: Memos is an open-source and self-hosted knowledge base that uses an SQLite database.

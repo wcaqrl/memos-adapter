@@ -1,0 +1,18 @@
+version: 1
+source:
+  kind: git
+  version: 0.26.2
+  ref: refs/tags/v0.26.2
+  revision: 71263736b017d9ae5e0ba326bd649dcc4fd7fdb2
+  tag: v0.26.2
+fingerprint: sha256:77ce5c7cfa56b035a102cbff6657e5b7bfe39fa21c970d35fd868dce96fd2aaf
+status: submitted
+images:
+  - id: memos
+    source_ref: docker.io/neosmemo/memos:0.26.2@sha256:2cf28cb565a5d57798a1d5d68f77ca580d9c9686e4f54a13e11144a523a6e045
+    source_digest: sha256:2cf28cb565a5d57798a1d5d68f77ca580d9c9686e4f54a13e11144a523a6e045
+    runtime_ref: registry.lazycat.cloud/longixaoyi/neosmemo/memos:0583be9ba4591c1e
+application:
+  package: cloud.lazycat.app.memos
+  version: 0.26.2
+  lpk_sha256: 86a613f7f5da4c19a0382b2028d7ed7b4b6910469ff201d9ff376c303a3795f2

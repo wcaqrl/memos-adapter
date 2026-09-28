@@ -1,0 +1,49 @@
+name: Update Memos for LazyCat
+run-name: ${{ github.event_name == 'push' && 'Memos → LazyCat [仅检查]' || (github.event_name == 'workflow_dispatch' && inputs.dry-run) && 'Memos → LazyCat [仅检查]' || 'Memos → LazyCat [升级测试、转存、打包并送审]' }}
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/update.yml
+      - scripts/test-upgrade.sh
+      - lazycat-action.yml
+      - lzc-build.yml
+      - lzc-manifest.yml
+      - package.yml
+  schedule:
+    # 04:17 UTC = 12:17 China Standard Time.
+    - cron: '17 4 * * *'
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: 勾选＝仅检查；取消勾选＝升级测试、转存镜像、构建 LPK 并提交审核。
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: memos-lazycat-update
+  cancel-in-progress: false
+
+jobs:
+  upgrade-test:
+    name: Verify persistent data upgrade
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+      - name: Upgrade the current store baseline to the latest stable Memos
+        run: ./scripts/test-upgrade.sh
+
+  update:
+    needs: upgrade-test
+    uses: wcaqrl/lazycat-action/.github/workflows/lazycat.yml@v1
+    with:
+      config: lazycat-action.yml
+      operation: auto
+      dry-run: ${{ github.event_name == 'push' || inputs.dry-run || false }}
+    secrets: inherit

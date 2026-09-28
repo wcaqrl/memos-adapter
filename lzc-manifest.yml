@@ -1,0 +1,27 @@
+application:
+  subdomain: memos
+  public_path:
+    - /api
+  multi_instance: true
+  ingress:
+    - protocol: tcp
+      port: 5230
+      service: memos
+  routes:
+    - /=http://memos.cloud.lazycat.app.memos.lzcapp:5230
+
+ext_config:
+  disable_grpc_web_on_root: true
+
+services:
+  memos:
+    # upstream: docker.io/neosmemo/memos:0.26.2@sha256:2cf28cb565a5d57798a1d5d68f77ca580d9c9686e4f54a13e11144a523a6e045
+    image: registry.lazycat.cloud/longixaoyi/neosmemo/memos:0583be9ba4591c1e
+    environment:
+      - MEMOS_MODE=prod
+      - MEMOS_ADDR=0.0.0.0
+      - MEMOS_PORT=5230
+      - MEMOS_DRIVER=sqlite
+      - MEMOS_DATA=/var/opt/memos
+    binds:
+      - /lzcapp/var/db/memos:/var/opt/memos
