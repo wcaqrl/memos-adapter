@@ -30,8 +30,29 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  preflight:
+    name: Verify repository configuration
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+      - name: Check LazyCat developer PAT
+        shell: bash
+        env:
+          LZC_API_TOKEN: ${{ secrets.LZC_API_TOKEN }}
+        run: |
+          if [[ -z "${LZC_API_TOKEN}" ]]; then
+            echo "::error title=Missing LZC_API_TOKEN::Add the LazyCat developer PAT at Settings → Secrets and variables → Actions → Repository secrets."
+            exit 1
+          fi
+          echo "LZC_API_TOKEN is configured."
+      - name: Verify Actions can write adapter state
+        shell: bash
+        run: git push --dry-run origin "HEAD:${GITHUB_REF_NAME}"
+
   upgrade-test:
     name: Verify persistent data upgrade
+    needs: preflight
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
@@ -40,7 +61,7 @@ jobs:
         run: ./scripts/test-upgrade.sh
 
   update:
-    needs: upgrade-test
+    needs: [preflight, upgrade-test]
     uses: wcaqrl/lazycat-action/.github/workflows/lazycat.yml@v1
     with:
       config: lazycat-action.yml
