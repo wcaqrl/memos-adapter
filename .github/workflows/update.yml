@@ -36,6 +36,9 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v5
+      - name: Verify Actions can write adapter state
+        shell: bash
+        run: git push --dry-run origin "HEAD:${GITHUB_REF_NAME}"
       - name: Check LazyCat developer PAT
         shell: bash
         env:
@@ -46,9 +49,6 @@ jobs:
             exit 1
           fi
           echo "LZC_API_TOKEN is configured."
-      - name: Verify Actions can write adapter state
-        shell: bash
-        run: git push --dry-run origin "HEAD:${GITHUB_REF_NAME}"
 
   upgrade-test:
     name: Verify persistent data upgrade
