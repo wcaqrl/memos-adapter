@@ -1,4 +1,5 @@
 name: Update Memos for LazyCat
+# Repository configuration is verified before upgrade, delivery, and review submission.
 run-name: ${{ github.event_name == 'push' && 'Memos → LazyCat [仅检查]' || (github.event_name == 'workflow_dispatch' && inputs.dry-run) && 'Memos → LazyCat [仅检查]' || 'Memos → LazyCat [升级测试、转存、打包并送审]' }}
 
 on:
