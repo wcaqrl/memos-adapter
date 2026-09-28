@@ -6,7 +6,7 @@ source:
     revision: 2b2192d4e153bd04f1d325b60fd880cf00d68b01
     tag: v0.31.0
 fingerprint: sha256:2914cdc8a923f9d7ce76dbd33bc867e2817f39bef85e2f112316a62a1d8d36bc
-status: packaged
+status: submitted
 images:
     - id: memos
       source_ref: docker.io/neosmemo/memos:0.31.0@sha256:8596928c21551afc7d4e100051510bc134fd0caae51ad1d26cf899845d719321
