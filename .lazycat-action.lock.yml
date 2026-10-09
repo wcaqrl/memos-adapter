@@ -1,4 +1,4 @@
-version: 1
+version: 2
 source:
     kind: git
     version: 0.31.0
@@ -71,3 +71,18 @@ application:
         * @kalelooz made their first contribution in https://github.com/usememos/memos/pull/6346
 
         **Full Changelog**: https://github.com/usememos/memos/compare/v0.30.0...v0.31.0
+reviews:
+    - id: 19525
+      source:
+        kind: git
+        version: 0.31.0
+        ref: refs/tags/v0.31.0
+        revision: 2b2192d4e153bd04f1d325b60fd880cf00d68b01
+        tag: v0.31.0
+      fingerprint: sha256:2914cdc8a923f9d7ce76dbd33bc867e2817f39bef85e2f112316a62a1d8d36bc
+      application_version: 0.31.0
+      lpk_sha256: 4b5c181ed56f7a06a367de7e9c81f59a73f89b36d58537831a916eca333ce39d
+      status: approved
+      created_at: 2026-09-28T07:10:09.976Z
+      submitted_at: 2026-09-28T07:10:09.976Z
+      checked_at: 2026-10-09T11:20:57.209562267Z
