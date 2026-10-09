@@ -8,6 +8,8 @@ GitHub Actions 每天检查上游最高的稳定 `vX.Y.Z` 标签。发现新版�
 
 推送适配配置只执行 dry-run。正式更新可以在 **Actions → Update Memos for LazyCat → Run workflow** 中取消勾选 dry-run，或等待每日定时任务。
 
+打包后，官方商店送审和本仓库 GitHub Release 并行运行。Release 的 `v<应用版本>` 下提供 `cloud.lazycat.app.memos-v<应用版本>.lpk`，不附带校验文件；Release 失败只显示警告，不阻止送审。状态锁自动记录审核 ID、状态和拒绝原因，同一上游版本不会因拒绝而被定时任务重复提交。修复适配配置后，可在手动运行时取消 `dry-run` 并勾选 `retry-rejected`，将同一源版本打包为新的应用 patch 版本后送审。工作流继续引用统一的 `@v1`。
+
 ## 数据兼容约束
 
 现有 `0.26.2` 应用将 `/lzcapp/var/db/memos` 绑定到容器 `/var/opt/memos`。此路径保存 SQLite 数据库及本地附件，后续版本不得改名，否则已有用户升级后会看到一个空实例。
